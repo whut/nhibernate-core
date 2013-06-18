@@ -25,8 +25,9 @@ namespace NHibernate.Persister.Entity
 		private readonly string[] constraintOrderedTableNames;
 		private readonly string[][] constraintOrderedKeyColumnNames;
 
-		public UnionSubclassEntityPersister(PersistentClass persistentClass, ICacheConcurrencyStrategy cache, 
-			ISessionFactoryImplementor factory, IMapping mapping):base(persistentClass, cache, factory)
+		public UnionSubclassEntityPersister(PersistentClass persistentClass, ICacheConcurrencyStrategy cache,
+			ISessionFactoryImplementor factory, IMapping mapping)
+			: base(persistentClass, cache, factory)
 		{
 			if (IdentifierGenerator is IdentityGenerator)
 			{
@@ -37,7 +38,7 @@ namespace NHibernate.Persister.Entity
 
 			tableName =
 				persistentClass.Table.GetQualifiedName(factory.Dialect, factory.Settings.DefaultCatalogName,
-				                                       factory.Settings.DefaultSchemaName);
+													   factory.Settings.DefaultSchemaName);
 
 			#region Custom SQL
 
@@ -48,9 +49,9 @@ namespace NHibernate.Persister.Entity
 			sql = persistentClass.CustomSQLInsert;
 			callable = sql != null && persistentClass.IsCustomInsertCallable;
 			checkStyle = sql == null
-			             	? ExecuteUpdateResultCheckStyle.Count
-			             	: (persistentClass.CustomSQLInsertCheckStyle
-			             	   ?? ExecuteUpdateResultCheckStyle.DetermineDefault(sql, callable));
+							? ExecuteUpdateResultCheckStyle.Count
+							: (persistentClass.CustomSQLInsertCheckStyle
+							   ?? ExecuteUpdateResultCheckStyle.DetermineDefault(sql, callable));
 			customSQLInsert = new SqlString[] { sql };
 			insertCallable = new bool[] { callable };
 			insertResultCheckStyles = new ExecuteUpdateResultCheckStyle[] { checkStyle };
@@ -58,9 +59,9 @@ namespace NHibernate.Persister.Entity
 			sql = persistentClass.CustomSQLUpdate;
 			callable = sql != null && persistentClass.IsCustomUpdateCallable;
 			checkStyle = sql == null
-			             	? ExecuteUpdateResultCheckStyle.Count
-			             	: (persistentClass.CustomSQLUpdateCheckStyle
-			             	   ?? ExecuteUpdateResultCheckStyle.DetermineDefault(sql, callable));
+							? ExecuteUpdateResultCheckStyle.Count
+							: (persistentClass.CustomSQLUpdateCheckStyle
+							   ?? ExecuteUpdateResultCheckStyle.DetermineDefault(sql, callable));
 			customSQLUpdate = new SqlString[] { sql };
 			updateCallable = new bool[] { callable };
 			updateResultCheckStyles = new ExecuteUpdateResultCheckStyle[] { checkStyle };
@@ -68,9 +69,9 @@ namespace NHibernate.Persister.Entity
 			sql = persistentClass.CustomSQLDelete;
 			callable = sql != null && persistentClass.IsCustomDeleteCallable;
 			checkStyle = sql == null
-			             	? ExecuteUpdateResultCheckStyle.Count
-			             	: (persistentClass.CustomSQLDeleteCheckStyle
-			             	   ?? ExecuteUpdateResultCheckStyle.DetermineDefault(sql, callable));
+							? ExecuteUpdateResultCheckStyle.Count
+							: (persistentClass.CustomSQLDeleteCheckStyle
+							   ?? ExecuteUpdateResultCheckStyle.DetermineDefault(sql, callable));
 			customSQLDelete = new SqlString[] { sql };
 			deleteCallable = new bool[] { callable };
 			deleteResultCheckStyles = new ExecuteUpdateResultCheckStyle[] { checkStyle };
@@ -150,7 +151,7 @@ namespace NHibernate.Persister.Entity
 							key.Add(column.GetQuotedName(factory.Dialect));
 
 						keyColumns.Add(key.ToArray());
-					}					
+					}
 				}
 
 				constraintOrderedTableNames = tableNames.ToArray();
@@ -182,7 +183,7 @@ namespace NHibernate.Persister.Entity
 
 		public override string DiscriminatorSQLValue
 		{
-			get { return discriminatorSQLValue;}
+			get { return discriminatorSQLValue; }
 		}
 
 		public override object DiscriminatorValue
@@ -367,7 +368,7 @@ namespace NHibernate.Persister.Entity
 			StringBuilder buf = new StringBuilder().Append("( ");
 			IEnumerable<PersistentClass> siter =
 				new JoinedEnumerable<PersistentClass>(new SingletonEnumerable<PersistentClass>(model),
-				                                      new SafetyEnumerable<PersistentClass>(model.SubclassIterator));
+													  new SafetyEnumerable<PersistentClass>(model.SubclassIterator));
 
 			foreach (PersistentClass clazz in siter)
 			{
@@ -382,7 +383,7 @@ namespace NHibernate.Persister.Entity
 							SqlType sqlType = col.GetSqlTypeCode(mapping);
 							buf.Append(dialect.GetSelectClauseNullString(sqlType)).Append(" as ");
 						}
-						buf.Append(col.Name);
+						buf.Append(col.GetQuotedName(dialect));
 						buf.Append(StringHelper.CommaSpace);
 					}
 					buf.Append(clazz.SubclassId).Append(" as clazz_");
