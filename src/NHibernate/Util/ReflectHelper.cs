@@ -602,6 +602,12 @@ namespace NHibernate.Util
 			{
 				return new Dictionary<string, string>(1);
 			}
+
+            IDictionary<string, object> sourceDictionary = source as IDictionary<string, object>;
+            if (sourceDictionary == null)
+            {
+                parameters.GetType().GetProperties().ToDictionary(pi => pi.Name, pi => pi.GetValue(parameters, null));
+            }
 			var props = source.GetType().GetProperties();
 			if (props.Length == 0)
 			{

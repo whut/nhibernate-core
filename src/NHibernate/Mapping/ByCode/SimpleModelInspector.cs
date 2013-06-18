@@ -171,7 +171,7 @@ namespace NHibernate.Mapping.ByCode
 		private Func<System.Type, bool, bool> isComponent;
 
 		private Func<MemberInfo, bool, bool> isPersistentId;
-		private Func<MemberInfo, bool, bool> isPersistentProperty;
+		private Func<MemberInfo, bool, bool> isPersistentProperty; // TODO
 		private Func<MemberInfo, bool, bool> isVersion = (m, declared) => declared;
 
 		private Func<MemberInfo, bool, bool> isProperty = (m, declared) => declared;
