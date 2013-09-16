@@ -105,7 +105,7 @@ namespace NHibernate.Properties
 			{
 				// the full inheritance chain has been walked and we could
 				// not find the Field
-				throw new PropertyNotFoundException(originalType, fieldName);
+				throw new PropertyNotFoundException(originalType, fieldName, originalType);
 			}
 
 			FieldInfo field =
