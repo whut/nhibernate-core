@@ -1,10 +1,13 @@
 ## 
 ##	This file contains sample commands to build NHibernate using the build files.
-##	It should be run from the nhibernate directory that contains the 
-##	NHibernateSolution.build file.
+##	It should be run from the root nhibernate directory that contains the 
+##	default.build file.
 ##	
 ##	If you are going to run the Test make sure to set the connection information.
 ##
+##	Usually it is enough to use ShowBuildMenu.bat helper script
+##
+##	Nant is available in Tools\nant\bin\
 ##
 
 
@@ -37,3 +40,5 @@ Nant api
 ## Build reference manual
 Nant manual
 
+## Build nuget packages
+Nant -D:project.config=release nuget 

@@ -274,7 +274,7 @@
 		</copy>
 	</target>
 	
-	<target name="package" depends="init binaries test reference-zip sources-zip binaries-zip"
+	<target name="package" depends="init binaries test reference-zip sources-zip binaries-zip nuget"
 		description="Creates files for the General Available Release on SourceForge">
 
 		<echo message="Created a '${project.config}' package in ${build.dir}" />
